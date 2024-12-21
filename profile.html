@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Beauty - Profile</title>
+    <style>
+        /* Profile Section Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            padding: 20px 0;
+            text-align: center;
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header h2 {
+            font-size: 2.5rem;
+            color: #ff6f61;
+        }
+
+        .profile-picture {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ff6f61;
+        }
+
+        .profile-picture input {
+            margin-top: 1rem;
+        }
+
+        .profile-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .profile-details div {
+            width: 45%;
+        }
+
+        .profile-details label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-details p, .profile-details input {
+            padding: 0.5rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            width: 100%;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .profile-details input {
+            display: none;
+        }
+
+        .profile-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .profile-actions .cta-btn {
+            background-color: #ff6f61;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+       footer {
+            background: #ff6f61;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+
+
+        .profile-actions .cta-btn:hover {
+            background-color: #e65c50;
+        }
+
+        @media (max-width: 768px) {
+            .profile-details {
+                flex-direction: column;
+            }
+
+            .profile-details div {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>My Beauty</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+   <div class="profile-container">
+        <div class="profile-header">
+            <h2>My Profile</h2>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="profile-picture">
+            <img src="default-profile.jpg" id="profileImage" alt="">
+            <input type="file" id="imageUpload" accept="image/*">
+        </div>
+
+        <!-- Profile Details -->
+        <div class="profile-details">
+            <div>
+                <label for="name">Name:</label>
+                <p id="nameDisplay"></p>
+                <input type="text" id="nameInput" value="your name">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <p id="emailDisplay"></p>
+                <input type="email" id="emailInput" value="eample@gmail.com">
+            </div>
+        </div>
+
+        <div class="profile-details">
+            <div>
+                <label for="location">Location:</label>
+                <p id="locationDisplay"></p>
+                <input type="text" id="locationInput" value="Address">
+            </div>
+            <div>
+                <label for="phone">Phone:</label>
+                <p id="phoneDisplay"></p>
+                <input type="text" id="phoneInput" value="+91 xxxxxxxxxxx">
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="profile-actions">
+            <a href="#" id="editProfileBtn" class="cta-btn">Edit Profile</a>
+            <a href="#" id="saveProfileBtn" class="cta-btn" style="display: none;">Save Profile</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Rhythmic World. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:info@rhythmicworld.com">info@rhythmicworld.com</a></p>
+    </footer>
+
+    <script>
+        // Profile Interactivity
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const saveProfileBtn = document.getElementById('saveProfileBtn');
+
+        const nameDisplay = document.getElementById('nameDisplay');
+        const nameInput = document.getElementById('nameInput');
+
+        const emailDisplay = document.getElementById('emailDisplay');
+        const emailInput = document.getElementById('emailInput');
+
+        const locationDisplay = document.getElementById('locationDisplay');
+        const locationInput = document.getElementById('locationInput');
+
+        const phoneDisplay = document.getElementById('phoneDisplay');
+        const phoneInput = document.getElementById('phoneInput');
+
+        const imageUpload = document.getElementById('imageUpload');
+        const profileImage = document.getElementById('profileImage');
+
+        // Load data from localStorage on page load
+        window.onload = function () {
+            const storedName = localStorage.getItem('name');
+            const storedEmail = localStorage.getItem('email');
+            const storedLocation = localStorage.getItem('location');
+            const storedPhone = localStorage.getItem('phone');
+            const storedProfileImage = localStorage.getItem('profileImage');
+
+            if (storedName) nameDisplay.textContent = storedName;
+            if (storedEmail) emailDisplay.textContent = storedEmail;
+            if (storedLocation) locationDisplay.textContent = storedLocation;
+            if (storedPhone) phoneDisplay.textContent = storedPhone;
+            if (storedProfileImage) profileImage.src = storedProfileImage;
+        };
+
+        // Enable Edit Mode
+        function enableEditMode() {
+            nameDisplay.style.display = 'none';
+            nameInput.style.display = 'block';
+
+            emailDisplay.style.display = 'none';
+            emailInput.style.display = 'block';
+
+            locationDisplay.style.display = 'none';
+            locationInput.style.display = 'block';
+
+            phoneDisplay.style.display = 'none';
+            phoneInput.style.display = 'block';
+
+            editProfileBtn.style.display = 'none';
+            saveProfileBtn.style.display = 'inline-block';
+        }
+
+        // Save Profile Changes to localStorage
+        function saveProfile() {
+            // Save to localStorage
+            localStorage.setItem('name', nameInput.value);
+            localStorage.setItem('email', emailInput.value);
+            localStorage.setItem('location', locationInput.value);
+            localStorage.setItem('phone', phoneInput.value);
+
+            nameDisplay.textContent = nameInput.value;
+            emailDisplay.textContent = emailInput.value;
+            locationDisplay.textContent = locationInput.value;
+            phoneDisplay.textContent = phoneInput.value;
+
+            nameDisplay.style.display = 'block';
+            nameInput.style.display = 'none';
+
+            emailDisplay.style.display = 'block';
+            emailInput.style.display = 'none';
+
+            locationDisplay.style.display = 'block';
+            locationInput.style.display = 'none';
+
+            phoneDisplay.style.display = 'block';
+            phoneInput.style.display = 'none';
+
+            editProfileBtn.style.display = 'inline-block';
+            saveProfileBtn.style.display = 'none';
+        }
+
+        // Update Profile Picture
+        imageUpload.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    profileImage.src = event.target.result;
+                    localStorage.setItem('profileImage', event.target.result); // Save image to localStorage
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Add Event Listeners
+        editProfileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            enableEditMode();
+        });
+
+        saveProfileBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            saveProfile();
+        });
+    </script>
+</body>
+</html>

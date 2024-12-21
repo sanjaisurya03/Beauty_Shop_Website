@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            padding: 15px 0;
+            text-align: center;
+            background-color: #ff6f61;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item p {
+            margin: 0;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .cart-item .quantity {
+            background: #ff6f61;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 20px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #e65c50;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Display items in the cart with quantities
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartContainer = document.getElementById("cart-items");
+            cartContainer.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `<p class="empty-cart">Your cart is empty.</p>`;
+            } else {
+                let total = 0;
+
+                // Aggregate cart items by product name
+                const aggregatedCart = cart.reduce((acc, item) => {
+                    const existingItem = acc.find(i => i.name === item.name);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                        existingItem.totalPrice += item.price;
+                    } else {
+                        acc.push({ name: item.name, price: item.price, quantity: 1, totalPrice: item.price });
+                    }
+                    return acc;
+                }, []);
+
+                aggregatedCart.forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "cart-item";
+                    div.innerHTML = `
+                        <p>${item.name} <span class="quantity">x${item.quantity}</span></p>
+                        <p>Rs. ${item.totalPrice}</p>
+                    `;
+                    cartContainer.appendChild(div);
+                    total += item.totalPrice;
+                });
+
+                const totalDiv = document.createElement("div");
+                totalDiv.className = "total";
+                totalDiv.innerHTML = `Total: Rs. ${total}`;
+                cartContainer.appendChild(totalDiv);
+            }
+        }
+
+        // Proceed to billing page
+        function proceedToBilling() {
+            window.location.href = "billing.html";
+        }
+
+        window.onload = displayCart;
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h2>Cart Items</h2>
+        <div id="cart-items"></div>
+        <button onclick="proceedToBilling()">Proceed to Billing</button>
+    </div>
+</body>
+</html>
